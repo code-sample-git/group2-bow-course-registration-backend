@@ -13,5 +13,5 @@ npm install
 To start the application, run the following command:
 
 ```
-npm start
+node app.js
 ```
