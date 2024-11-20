@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI, {
@@ -16,15 +15,21 @@ mongoose.connect(process.env.MONGO_URI, {
 require('./models/student.model');
 require('./models/course.model');
 require('./models/registration.model');
-const studentRoutes = require('./routes/student.routes');
-//const authRoutes = require('./routes/auth.routes');
 
+// Initialize the app
 const app = express();
+
+// Middleware
 app.use(bodyParser.json());
 
-app.use('/api/students', studentRoutes);
-//app.use('/api/auth', authRoutes);
+// Import and use routes
+const studentRoutes = require('./routes/student.routes');
+const authRoutes = require('./routes/auth.routes');
 
+app.use('/api/auth', authRoutes);
+app.use('/api/students', studentRoutes);
+
+// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
