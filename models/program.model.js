@@ -1,23 +1,17 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const programSchema = new Schema({
-  code: {
-    type: String,
-    required: true
-  },
-  department: {
-    type: String,
-    required: true
-  },
-  term: String,
-  start_date: Date,
-  end_date: Date,
+const programSchema = new mongoose.Schema({
+  code: { type: String, required: true },
+  department: { type: String, required: true },
+  term: { type: String, required: true },
+  start_date: { type: Date, required: true },
+  end_date: { type: Date, required: true },
   fees: {
-    domestic: Number,
-    international: Number
+    domestic: { type: Number, required: true },
+    international: { type: Number, required: true },
   },
-  description: String
-}, { timestamps: true });
+  description: { type: String, required: true }
+});
 
 module.exports = mongoose.model('Program', programSchema);
+
