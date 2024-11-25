@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI, {
@@ -26,8 +28,10 @@ app.use(bodyParser.json());
 const studentRoutes = require('./routes/student.routes');
 const authRoutes = require('./routes/auth.routes');
 
+app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
