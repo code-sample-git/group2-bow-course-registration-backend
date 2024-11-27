@@ -5,6 +5,8 @@ exports.signup = async (req, res) => {
   try {
     console.log(req.body); // Log to check what data is being received
 
+    //Testing
+
     const { first_name, last_name, username, password, email, status } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
