@@ -95,7 +95,48 @@
           }
         },
         "response": []
-      }
+      },
+      {
+        "name": "Submit Contact Message",
+        "request": {
+            "method": "POST",
+            "header": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                }
+            ],
+            "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Sample Title\",\n  \"message\": \"This is a sample message.\"\n}"
+            },
+            "url": {
+                "raw": "http://localhost:5000/contact/submit",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5000",
+                "path": ["contact", "submit"]
+            }
+        },
+        "response": []
+    },
+    {
+        "name": "Get Contact History",
+        "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+                "raw": "http://localhost:5000/contact/history",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5000",
+                "path": ["contact", "history"]
+            }
+        },
+        "response": []
+    }
+   
     ],
     "variable": [
       {
