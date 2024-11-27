@@ -5,7 +5,7 @@ exports.signup = async (req, res) => {
   try {
     console.log(req.body); // Log to check what data is being received
 
-    //Testing
+    //Testing1
 
     const { first_name, last_name, username, password, email, status } = req.body;
 
