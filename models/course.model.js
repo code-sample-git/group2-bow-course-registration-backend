@@ -1,24 +1,14 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const courseSchema = new Schema({
-  code: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  term: String,
-  start_date: Date,
-  end_date: Date,
-  description: String,
-  program_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Program'
-  }
-}, { timestamps: true });
+const courseSchema = new mongoose.Schema({
+  code: { type: String, required: true },
+  name: { type: String, required: true },
+  term: { type: String, required: true },
+  start_date: { type: Date, required: true },
+  end_date: { type: Date, required: true },
+  description: { type: String, required: true },
+  program_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Program', required: true }
+});
 
 module.exports = mongoose.model('Course', courseSchema);
+
