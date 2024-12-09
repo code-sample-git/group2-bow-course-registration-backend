@@ -7,7 +7,7 @@ exports.signup = async (req, res) => {
 
     //Testing1
 
-    const { first_name, last_name, username, password, email, status } = req.body;
+    const { first_name, last_name, username, password, email, phone,birthday, program_id, status } = req.body; // sign up and login function will work when deleting program_id
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -16,6 +16,9 @@ exports.signup = async (req, res) => {
       last_name,
       username,
       email,
+      phone,
+      birthday,
+      program_id, // sign up and login function will work when deleting this line
       hashed_password: hashedPassword,
       status
     });
