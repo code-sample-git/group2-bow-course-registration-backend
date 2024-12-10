@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
       email,
       phone,
       birthday,
-      program_id, // sign up and login function will work when deleting this line
+      //program_id, // sign up and login function will work when deleting this line
       hashed_password: hashedPassword,
       status
     });

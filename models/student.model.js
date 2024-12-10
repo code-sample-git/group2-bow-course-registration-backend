@@ -8,7 +8,8 @@ const studentSchema = new mongoose.Schema({
   birthday: { type: Date, required: true },
   username: { type: String, required: true },
   hashed_password: { type: String, required: true }
-  program_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Program', required: true }  // sign up and login function will work when deleting this line
+  // program_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Program', required: true } 
+   // sign up and login function will work when deleting this line
 });
 
 module.exports = mongoose.model('Student', studentSchema);
