@@ -8,7 +8,7 @@ exports.signup = async (req, res) => {
 
     //Testing1
 
-    const { first_name, last_name, username, password, email, phone, birthday, role = 'student' } = req.body;
+    const { first_name, last_name, username, password, email, phone, birthday,program,department, role = 'student' } = req.body;
     
     // Get the current sequence value and increment it
     const sequence = await Sequence.findOneAndUpdate(
@@ -26,6 +26,8 @@ exports.signup = async (req, res) => {
       email,
       phone,
       birthday,
+      program,
+      department,
       hashed_password: hashedPassword,
       role,
       studentId: sequence.value
@@ -36,5 +38,16 @@ exports.signup = async (req, res) => {
     res.status(201).json({ message: 'Student registered successfully', studentId: student.studentId });
   } catch (err) {
     res.status(500).json({ message: 'Error registering student', error: err.message });
+  }
+};
+
+
+// Gget all students
+exports.getAllStudents = async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ message: 'Error retrieving students', error: err.message });
   }
 };

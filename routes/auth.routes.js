@@ -9,4 +9,7 @@ router.post('/login', authLoginController.login);
 // POST request for signup
 router.post('/signup', authSignupController.signup);
 
+// Route for getting all students
+router.get('/students', authSignupController.getAllStudents);
+
 module.exports = router;
