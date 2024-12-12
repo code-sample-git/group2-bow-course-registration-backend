@@ -8,7 +8,8 @@ const studentSchema = new mongoose.Schema({
   birthday: { type: Date, required: true },
   username: { type: String, required: true },
   hashed_password: { type: String, required: true },
-  role: { type: String, required: true }
+  role: { type: String, required: true },
+  studentId: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Student', studentSchema);

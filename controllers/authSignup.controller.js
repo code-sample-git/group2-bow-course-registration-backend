@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const Student = require('../models/student.model');
+const Sequence = require('../models/sequence.model');
 
 exports.signup = async (req, res) => {
   try {
@@ -7,8 +8,15 @@ exports.signup = async (req, res) => {
 
     //Testing1
 
-    const { first_name, last_name, username, password, email, phone,birthday,  role = 'student' } = req.body; 
+    const { first_name, last_name, username, password, email, phone, birthday, role = 'student' } = req.body;
     
+    // Get the current sequence value and increment it
+    const sequence = await Sequence.findOneAndUpdate(
+      { name: 'student' },
+      { $inc: { value: 1 } },
+      { new: true, upsert: true }
+    );
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newStudent = new Student({
@@ -19,11 +27,13 @@ exports.signup = async (req, res) => {
       phone,
       birthday,
       hashed_password: hashedPassword,
-      role
+      role,
+      studentId: sequence.value
     });
 
+
     const student = await newStudent.save();
-    res.status(201).json({ message: 'Student registered successfully', studentId: student._id });
+    res.status(201).json({ message: 'Student registered successfully', studentId: student.studentId });
   } catch (err) {
     res.status(500).json({ message: 'Error registering student', error: err.message });
   }

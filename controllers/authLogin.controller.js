@@ -25,8 +25,9 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
+    //respond with token and role and the row sequence in database
+    res.status(200).json({ token, role: student.role, id: student.studentId });
 
-    res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
