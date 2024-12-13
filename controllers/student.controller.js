@@ -7,11 +7,22 @@ const jwt = require('jsonwebtoken');
 const getStudentFromToken = async (req) => {
   const token = req.headers['authorization'].split(' ')[1];
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  return await Student.findById(decoded.id);
+
+  
+  //get the username from the token
+  const username = decoded.username;
+  const studentId = decoded.studentId;
+
+  //if the username = admin, return all the students
+  if(username == 'admin'){
+    return await Student.find();
+  }else{
+    return await Student.findById(studentId);
+  }
 };
 
 // Get student profile
-exports.getProfile = async (req, res) => {
+async function getProfile(req, res){
   try {
     const student = await getStudentFromToken(req);
     if (!student) {
@@ -19,12 +30,13 @@ exports.getProfile = async (req, res) => {
     }
     res.status(200).json(student);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: 'Error fetching profile', error: err.message });
   }
 };
 
 // Register for a course
-exports.registerCourse = async (req, res) => {
+async function registerCourse(req, res){
   try {
     const student = await getStudentFromToken(req);
     if (!student) {
@@ -54,7 +66,7 @@ exports.registerCourse = async (req, res) => {
 };
 
 // Get registered courses
-exports.getRegisteredCourses = async (req, res) => {
+async function getRegisteredCourses (req, res) {
   try {
     const student = await getStudentFromToken(req);
     if (!student) {
@@ -67,6 +79,29 @@ exports.getRegisteredCourses = async (req, res) => {
     res.status(500).json({ message: 'Error fetching registered courses', error: err.message });
   }
 };
+
+async function updateProfile(req, res){
+  try {
+    const student = await getStudentFromToken(req);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    const { first_name, last_name, email, phone, birthday, program, department } = req.body;
+    student.first_name = first_name;
+    student.last_name = last_name;
+    student.email = email;
+    student.phone = phone;
+    student.birthday = birthday;
+    student.program = program;
+    student.department = department;
+
+    await student.save();
+    res.status(200).json({ message: 'Profile updated successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating profile', error: err.message });
+  }
+}
 
 
 // Directory: models/registration.model.js
@@ -92,3 +127,9 @@ const registrationSchema = new Schema({
 
 // Use a conditional check to avoid OverwriteModelError
 module.exports = mongoose.models.Registration || mongoose.model('Registration', registrationSchema);
+
+module.exports.getProfile = getProfile;
+module.exports.registerCourse = registerCourse;
+module.exports.getRegisteredCourses = getRegisteredCourses;
+module.exports.updateProfile = updateProfile;
+

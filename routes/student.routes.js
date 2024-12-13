@@ -18,6 +18,14 @@ router.get('/profile', (req, res, next) => {
   }
   studentController.getProfile(req, res, next);
 });  // Get student profile
+
+router.put('/profile', (req, res, next) => {
+  if (typeof studentController.updateProfile !== 'function') {
+    return next(new Error('updateProfile is not defined correctly'));
+  }
+  studentController.updateProfile(req, res, next);
+});  // Update student profile
+
 router.post('/register-course', (req, res, next) => {
   if (typeof studentController.registerCourse !== 'function') {
     return next(new Error('registerCourse is not defined correctly'));

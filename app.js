@@ -27,10 +27,13 @@ app.use(bodyParser.json());
 // Import and use routes
 const studentRoutes = require('./routes/student.routes');
 const authRoutes = require('./routes/auth.routes');
+const courseRoutes = require('./routes/course.routes');
+
 
 app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
+app.use('/api/courses', courseRoutes);
 
 
 // Start the server
